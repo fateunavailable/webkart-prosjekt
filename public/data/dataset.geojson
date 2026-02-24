@@ -1,0 +1,10 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "navn": "Sted A", "type": "Test" },
+      "geometry": { "type": "Point", "coordinates": [10.7522, 59.9139] }
+    }
+  ]
+}
