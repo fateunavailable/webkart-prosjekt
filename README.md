@@ -10,7 +10,7 @@ Løsningen kombinerer kartvisualisering og romlig analyse direkte i nettleseren.
 
 ## Demo av system
 
-🎥 Video demonstrasjon:  
+Video demonstrasjon av applikasjonen min:  
 https://youtu.be/p7CP4kg0EjY
 
 Videoen viser:
@@ -85,7 +85,7 @@ Popup-resultat
 ## Installasjon
 
 ```bash
-git clone 
+git clone "https://github.com/fateunavailable/webkart-prosjekt.git"
 cd webkart
 npm install
 npm run dev
