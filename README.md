@@ -89,3 +89,55 @@ git clone "https://github.com/fateunavailable/webkart-prosjekt.git"
 cd webkart
 npm install
 npm run dev
+
+## Oppgave 2 – Romlig analyse og Spatial SQL
+
+### Tematikk: Totalforsvarets år
+
+I denne oppgaven har jeg valgt å fokusere på tilgjengelighet til kritiske samfunnsfunksjoner i et totalforsvarsperspektiv.
+
+Totalforsvaret handler om samspillet mellom sivile og militære ressurser i krisesituasjoner. I denne analysen undersøkes hvordan geografiske metoder kan brukes til å vurdere tilgjengelighet til viktige funksjoner, og hvordan avstand og terreng kan påvirke beredskap.
+
+Dette er relevant fordi rask tilgang til ressurser som samlingspunkter, skoler eller andre beredskapsrelevante lokasjoner kan være avgjørende i en krisesituasjon.
+
+### Del A – Notebook
+
+Notebooken viser en arbeidsflyt for romlig analyse i Python med:
+- Pandas
+- GeoPandas
+- bufferanalyse
+- overlay-analyse
+- romlig aggregering
+- enkel rasteranalyse dokumentert med CLI-kommandoer i markdown
+
+Notebook:
+`src/Notebooks/oppgave2_totalforsvar.ipynb`
+
+### Del B – Utvidelse av webkart
+
+Webkartet utvides med Spatial SQL i Supabase/PostGIS. Tanken er at brukeren klikker i kartet, og at koordinatene sendes til en SQL-funksjon i Supabase. Denne funksjonen bruker PostGIS for å finne objekter innenfor en gitt avstand fra klikkpunktet.
+
+Brukeren får visuell feedback i kartet gjennom markør på klikkpunktet og utheving av relevante objekter.
+
+### SQL-snippet
+
+```sql
+create or replace function find_nearby_points(
+  lon double precision,
+  lat double precision,
+  distance_m integer default 1000
+)
+returns table (
+  id bigint,
+  geom geometry
+)
+language sql
+as $$
+  select *
+  from points
+  where ST_DWithin(
+    geom::geography,
+    ST_SetSRID(ST_MakePoint(lon, lat), 4326)::geography,
+    distance_m
+  );
+$$;
