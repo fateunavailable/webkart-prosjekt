@@ -82,44 +82,54 @@ Popup-resultat
 
 ---
 
-## Installasjon
-
-```bash
-git clone "https://github.com/fateunavailable/webkart-prosjekt.git"
-cd webkart
-npm install
-npm run dev
-
 ## Oppgave 2 – Romlig analyse og Spatial SQL
 
 ### Tematikk: Totalforsvarets år
 
-I denne oppgaven har jeg valgt å fokusere på tilgjengelighet til kritiske samfunnsfunksjoner i et totalforsvarsperspektiv.
+I denne oppgaven er fokuset på tilgjengelighet til kritiske samfunnsfunksjoner i et totalforsvarsperspektiv.
 
-Totalforsvaret handler om samspillet mellom sivile og militære ressurser i krisesituasjoner. I denne analysen undersøkes hvordan geografiske metoder kan brukes til å vurdere tilgjengelighet til viktige funksjoner, og hvordan avstand og terreng kan påvirke beredskap.
+Totalforsvaret handler om samspillet mellom sivile og militære ressurser i krisesituasjoner. Ved hjelp av romlig analyse undersøkes hvordan geografiske metoder kan brukes til å vurdere dekning og tilgjengelighet til viktige funksjoner innenfor et område.
 
-Dette er relevant fordi rask tilgang til ressurser som samlingspunkter, skoler eller andre beredskapsrelevante lokasjoner kan være avgjørende i en krisesituasjon.
+Analysen viser hvordan avstand, geografisk plassering og terreng kan påvirke beredskap og responstid.
+
+---
 
 ### Del A – Notebook
 
-Notebooken viser en arbeidsflyt for romlig analyse i Python med:
-- Pandas
-- GeoPandas
-- bufferanalyse
-- overlay-analyse
-- romlig aggregering
-- enkel rasteranalyse dokumentert med CLI-kommandoer i markdown
+Notebooken dokumenterer en arbeidsflyt for romlig analyse i Python og inkluderer:
+
+1. Innlesing og håndtering av data med Pandas og GeoPandas  
+2. Opprettelse av studieområde (Oslo)  
+3. Visualisering av punkter og studieområde  
+4. Bufferanalyse for å modellere tilgjengelighet  
+5. Overlay-analyse for å identifisere hvilke objekter som ligger innenfor området  
+6. Romlig aggregering (telling av punkter innenfor området)  
+7. Enkel rasteranalyse dokumentert med CLI-kommandoer (DEM, slope, polygonize og hillshade)  
 
 Notebook:
 `src/Notebooks/oppgave2_totalforsvar.ipynb`
 
+---
+
 ### Del B – Utvidelse av webkart
 
-Webkartet utvides med Spatial SQL i Supabase/PostGIS. Tanken er at brukeren klikker i kartet, og at koordinatene sendes til en SQL-funksjon i Supabase. Denne funksjonen bruker PostGIS for å finne objekter innenfor en gitt avstand fra klikkpunktet.
+Webkartet er utvidet med en løsning basert på Spatial SQL ved bruk av Supabase og PostGIS.
 
-Brukeren får visuell feedback i kartet gjennom markør på klikkpunktet og utheving av relevante objekter.
+Dataflyt i løsningen:
 
-### SQL-snippet
+1. Brukeren klikker i kartet  
+2. Klikkets koordinater sendes til en SQL-funksjon i databasen  
+3. PostGIS benyttes til å finne objekter innenfor en gitt avstand  
+4. Resultatet returneres til applikasjonen  
+5. Relevante objekter visualiseres i kartet  
+
+Brukeren får visuell tilbakemelding gjennom markør på klikkpunktet og utheving av objekter.
+
+---
+## Demo
+https://youtu.be/p7CP4kg0EjY
+
+### SQL-snippet (PostGIS)
 
 ```sql
 create or replace function find_nearby_points(
@@ -141,3 +151,15 @@ as $$
     distance_m
   );
 $$;
+
+
+
+## Installasjon
+
+```bash
+git clone "https://github.com/fateunavailable/webkart-prosjekt.git"
+cd webkart
+npm install
+npm run dev
+
+
